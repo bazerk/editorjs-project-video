@@ -1,0 +1,1 @@
+Small editor.js plugin created for a project - most likely of limited use to anyone else!
