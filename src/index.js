@@ -1,8 +1,10 @@
- require('./index.css').toString();
+require('./index.css').toString();
 
- class ProjectVideo {
+class ProjectVideo {
 
     static wrapperClassName = 'cs-project-video'
+    static lhsWrapperClassName = 'cs-project-video__lhs'
+    static rhsWrapperClassName = 'cs-project-video__rhs'
     static titleClassName = 'cs-project-video__title'
     static linkClassName = 'cs-project-video__link'
     static descriptionClassName = 'cs-project-video__description'
@@ -17,11 +19,11 @@
 
     constructor({data}){
         this.data = data
-        if (!this.data) {
+        if (!this.data || !this.data.title) {
             this.data = {
-                title: '',
-                link: '',
-                description: '',
+                title: 'Title here',
+                link: '<link to the video presentation>',
+                description: 'Description here',
             }
         }
     }
@@ -29,25 +31,34 @@
     render() {
         const wrapper = document.createElement('div')
         wrapper.classList.add(ProjectVideo.wrapperClassName)
+
+        const lhsWrapper = document.createElement('div')
+        lhsWrapper.classList.add(ProjectVideo.lhsWrapperClassName)
+        wrapper.appendChild(lhsWrapper)
         
         const title = document.createElement('h2')
         title.contentEditable = true
         title.classList.add(ProjectVideo.titleClassName)
         title.innerHTML = this.data.title
-        wrapper.appendChild(title)
-
-        const videoLink = document.createElement('input')
-        videoLink.placeholder = 'Link to video'
-        videoLink.classList.add(ProjectVideo.linkClassName)
-        videoLink.value = this.data.link
-        wrapper.appendChild(videoLink)
+        lhsWrapper.appendChild(title)
 
         const description = document.createElement('p')
         description.contentEditable = true
         description.classList.add(ProjectVideo.descriptionClassName)
         description.innerHTML = this.data.description
-        wrapper.appendChild(description)
-        
+        lhsWrapper.appendChild(description)
+
+
+        const rhsWrapper = document.createElement('div')
+        rhsWrapper.classList.add(ProjectVideo.rhsWrapperClassName)
+        wrapper.appendChild(rhsWrapper)
+
+        const videoLink = document.createElement('input')
+        videoLink.placeholder = 'Link to video'
+        videoLink.classList.add(ProjectVideo.linkClassName)
+        videoLink.value = this.data.link
+        rhsWrapper.appendChild(videoLink)
+
         return wrapper;
     }
 
